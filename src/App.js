@@ -1,26 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import './App.css'
+import { RelayEnvironmentProvider } from 'react-relay/hooks'
+import RelayEnvironment from './relay/relayEnvironment'
+import createRouter from './routing/createRouter'
+import RouterRenderer from './routing/RouteRenderer'
+import RoutingContext from './routing/RoutingContext'
+import routes from './routes'
 
-function App() {
+// Uses the custom router setup to define a router instanace that we can pass through context
+const router = createRouter(routes)
+
+function AppRoot(props) {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <RelayEnvironmentProvider environment={RelayEnvironment}>
+      <RoutingContext.Provider value={router.context}>
+        {/* Render the active route */}
+        <RouterRenderer />
+      </RoutingContext.Provider>
+    </RelayEnvironmentProvider>
+  )
 }
 
-export default App;
+export default AppRoot
