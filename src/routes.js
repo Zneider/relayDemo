@@ -7,7 +7,7 @@ const routes = [
     path: '/',
     exact: true,
     component: JSResource('Root', () => import('./Root')),
-    prepare: params => {
+    prepare: (params, searchParams) => {
       const RootQuery = require('./__generated__/RootContinentsQuery.graphql')
       return {
         rootQuery: preloadQuery(
@@ -16,6 +16,7 @@ const routes = [
           {
             // owner: 'facebook',
             // name: 'relay',
+            showContinentCode: searchParams.get('showContinentCode') === 'true',
           },
           // The fetchPolicy allows us to specify whether to render from cached
           // data if possible (store-or-network) or only fetch from network

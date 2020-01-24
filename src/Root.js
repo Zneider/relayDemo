@@ -12,9 +12,10 @@ export default function Root(props) {
   // on props.prepared.issuesQuery - see src/routes.js
   const data = usePreloadedQuery(
     graphql`
-      query RootContinentsQuery {
+      query RootContinentsQuery($showContinentCode: Boolean = false) {
         continents {
           ...ContinentListItemFragment
+            @arguments(showContinentCode: $showContinentCode)
         }
       }
     `,

@@ -4,9 +4,12 @@ import { useFragment } from 'react-relay/hooks'
 import Link from '../routing/Link'
 
 const continentListFragment = graphql`
-  fragment ContinentListItemFragment on Continent {
+  fragment ContinentListItemFragment on Continent
+    @argumentDefinitions(
+      showContinentCode: { type: "Boolean", defaultValue: true }
+    ) {
     name
-    code
+    code @include(if: $showContinentCode)
   }
 `
 
